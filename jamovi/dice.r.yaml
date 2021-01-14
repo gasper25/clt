@@ -1,0 +1,33 @@
+---
+name:  dice
+title: Throwing dice
+jrs:   '1.1'
+
+items:
+    - name:  izpis
+      title: Summary
+      type:  Table
+      rows: 1
+      columns:       
+      - name: trials
+        title: No. of trials
+        type: integer
+      - name: dic
+        title: No. of dices (n)
+        type: integer    
+      - name: side
+        title: No. of sides
+        type: integer     
+      - name: samplespace
+        title: Event space
+        type: integer           
+
+    - name: slikak
+      title: Histogram
+      visible: FALSE
+      type: Image
+      width: 600
+      height: 400
+      renderFun: .slikak
+
+...

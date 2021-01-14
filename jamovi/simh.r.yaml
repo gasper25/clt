@@ -1,0 +1,62 @@
+---
+name:  simh
+title: Hypothesis sim
+jrs:   '1.1'
+
+items:
+    - name:  izpis
+      title: Summary
+      type:  Table
+      rows: 1
+      columns:       
+      - name: raz
+        title: Expected diff. 
+        type: integer
+      - name: dej
+        title: Average diff. in means
+        type: number        
+      - name: sam
+        title: Sample size
+        type: integer
+      - name: pon
+        title: Trials
+        type: integer  
+      - name: del
+        title: P of sig. tests
+        type: number  
+      - name: pval
+        title: Critical p
+        type: number  
+      clearWith:
+        - dif
+        - sam
+        - numer
+        - pval
+
+    - name: his
+      title: Distribution of differences in means
+      visible: FALSE
+      type: Image
+      width: 600
+      height: 400
+      renderFun: .his
+      clearWith:
+        - dif
+        - sam
+        - numer
+        - pval
+    - name: plotci
+      title: Confidence intervals
+      visible: FALSE
+      type: Image
+      width: 600
+      height: 400
+      renderFun: .plotci
+      clearWith:
+        - dif
+        - sam
+        - numer
+        - pval
+
+
+...

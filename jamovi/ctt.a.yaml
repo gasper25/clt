@@ -1,0 +1,44 @@
+---
+name:  ctt
+title: Central limit theorem
+menuGroup: clt
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: dist
+      title: Source distribution
+      type: List
+      options:
+        - title: normal
+          name:  normal
+        - title: uniform
+          name:  uniform
+        - title: geometric
+          name:  geometric
+        - title: lognormal
+          name:  lognormal
+        - title: binomial
+          name:  binomial          
+      default: normal
+
+    - name: sample
+      title: Sample size (1-200)
+      type: Integer
+      min: 1
+      max: 200
+      default: 25
+      
+    - name: repeats
+      title: No. of trials (1-5000)
+      type: Integer
+      min: 1
+      max: 5000
+      default: 100
+      
+    - name: pic
+      title: Histogram
+      type: Bool
+      default: FALSE        
+
+...

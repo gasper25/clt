@@ -1,0 +1,46 @@
+---
+name:  simh
+title: Hypothesis sim
+menuGroup: clt
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: dif
+      title: Population difference (0-10; sd=10)
+      type: Integer
+      min: 0
+      max: 10
+      default: 0
+
+    - name: sam
+      title: Sample size (5-500)
+      type: Integer
+      min: 5
+      max: 500
+      default: 15
+
+    - name: numer
+      title: No. of trials(1-2000)
+      type: Integer
+      min: 0
+      max: 2000
+      default: 20
+
+    - name: pval
+      title: p value (type I error probability)
+      type: Number
+      min: 0
+      max: .3
+      default: 0.05
+     
+    - name: his
+      title: Distribution of differences
+      type: Bool
+      default: false
+    - name: plotci
+      title: CI plot
+      type: Bool
+      default: false
+
+...

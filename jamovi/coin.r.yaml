@@ -1,0 +1,38 @@
+---
+name:  coin
+title: Tossing coin
+jrs:   '1.1'
+
+items:
+
+    - name:  izpis
+      title: Summary
+      type:  Table
+      rows: 1
+      columns:       
+      - name: trials
+        title: Trials
+        type: integer
+      - name: koins
+        title: Coins (n)
+        type: integer    
+      - name: verjet
+        title: Probability (p)
+        type: number  
+      - name: np
+        title: np
+        type: integer 
+      - name: np1
+        title: n(1-p)
+        type: integer         
+
+    - name: slika
+      title: Histogram
+      visible: FALSE
+      type: Image
+      width: 600
+      height: 400
+      renderFun: .slika
+
+
+...

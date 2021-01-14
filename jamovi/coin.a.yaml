@@ -1,0 +1,48 @@
+---
+name:  coin
+title: Tossing coin
+menuGroup: clt
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: trial
+      title: No. of trials (1-50.000)
+      type: Integer
+      min: 1
+      max: 50000
+      default: 1000
+
+    - name: coins
+      title: No. of coins (n)
+      type: List
+      options:
+        - title: 'n=3'
+          name:  'n=3'
+        - title: 'n=5'
+          name:  'n=5'
+        - title: 'n=10'
+          name:  'n=10'
+        - title: 'n=20'
+          name:  'n=20'
+        - title: 'n=50'
+          name:  'n=50'
+        - title: 'n=100'
+          name:  'n=100'
+        - title: 'n=200'
+          name:  'n=200'
+      default: 'n=20'
+      
+    - name: prob
+      title: Prob. of success (p)
+      type: Number
+      min: 0.01
+      max: .999
+      default: .5
+      
+    - name: slika
+      title: Histogram
+      type: Bool
+      default: FALSE  
+
+...

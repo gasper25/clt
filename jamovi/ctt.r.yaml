@@ -1,0 +1,62 @@
+---
+name:  ctt
+title: Central limit theorem
+jrs:   '1.1'
+
+items:
+    - name:  izpis
+      title: Summary of source distribution
+      type:  Table
+      rows: 1
+      columns:       
+      - name: distrib
+        title: Distribution
+        type: text
+      - name: meanp
+        title: Mean
+        type: number   
+      - name: sdp
+        title: St. deviation
+        type: number        
+
+    - name:  izpis2
+      title: Sampling
+      type:  Table
+      rows: 1
+      columns:       
+      - name: size
+        title: Sample size
+        type: integer    
+      - name: repeats
+        title: No. of samples
+        type: integer     
+      - name: means
+        title: Mean (of sample means)
+        type: number 
+      - name: sds
+        title: SD (of sample means)
+        type: number 
+      - name: serror
+        title: St. error of mean°
+        type: number 
+      notes: 
+          1: ° Calculated standard error
+      
+    - name: picp
+      title: Source distribution
+      visible: FALSE
+      type: Image
+      width: 600
+      height: 400
+      renderFun: .picp
+
+    - name: pics
+      title: Distribution of sample means
+      visible: FALSE
+      type: Image
+      width: 600
+      height: 250
+      renderFun: .pics
+
+
+...

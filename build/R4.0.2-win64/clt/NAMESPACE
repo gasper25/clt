@@ -1,0 +1,16 @@
+exportPattern("^[[:alpha:]]+")
+
+export(coinClass)
+export(coinOptions)
+
+export(diceClass)
+export(diceOptions)
+
+export(cttClass)
+export(cttOptions)
+
+export(simrClass)
+export(simrOptions)
+
+export(simhClass)
+export(simhOptions)

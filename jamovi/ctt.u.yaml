@@ -1,0 +1,28 @@
+title: Central limit theorem
+name: ctt
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: dist
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: sample
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: repeats
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: pic

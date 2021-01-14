@@ -1,0 +1,41 @@
+---
+name:  simr
+title: Correlation sim
+jrs:   '1.1'
+
+items:
+    - name:  izpis
+      title: Summary
+      type:  Table
+      rows: 1
+      columns:       
+      - name: numer
+        title: No. of pairs
+        type: integer
+      - name: kor
+        title: Correlation
+        type: number
+      - name: ciL
+        title: Lower CI (95 %)
+        type: number
+        visible: (ci)
+      - name: ciU
+        title: Upper CI (95 %)
+        type: number
+        visible: (ci)
+      clearWith:
+        - numer
+        - korel
+            
+    - name: scat
+      title: Scatterplot
+      visible: FALSE
+      type: Image
+      width: 400
+      height: 400
+      renderFun: .scat
+      clearWith:
+        - numer
+        - korel
+
+...

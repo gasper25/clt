@@ -1,0 +1,28 @@
+title: Tossing coin
+name: coin
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: trial
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: coins
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: prob
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: CheckBox
+        name: slika

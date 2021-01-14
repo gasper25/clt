@@ -1,0 +1,45 @@
+---
+title: Lessons about Central Limit Theorem
+name: clt
+version: 1.0.0
+jms: '1.0'
+authors:
+  - Gasper Cankar
+maintainer: Gasper Cankar <gasper.cankar@guest.arnes.si>
+date: '2021-01-12'
+type: R
+description: >-
+  Simple simulations to help students visualize first lessons in probability:
+  how and when binomial distribution approximates normal and how Law of big
+  numbers and Central Limit Theorem work. Students can visualize correlations of
+  different sizes and grasp important concepts when testing hypotheses.
+analyses:
+  - title: Tossing coin
+    name: coin
+    ns: clt
+    menuGroup: clt
+    menuTitle: Tossing coin
+  - title: Throwing dice
+    name: dice
+    ns: clt
+    menuGroup: clt
+    menuTitle: Throwing dice
+  - title: Central limit theorem
+    name: ctt
+    ns: clt
+    menuGroup: clt
+    menuTitle: Central limit theorem
+  - title: Correlation sim
+    name: simr
+    ns: clt
+    menuGroup: clt
+    menuTitle: Correlation sim
+  - title: Hypothesis sim
+    name: simh
+    ns: clt
+    menuGroup: clt
+    menuTitle: Hypothesis sim
+usesNative: true
+minApp: 1.0.8
+
+...
