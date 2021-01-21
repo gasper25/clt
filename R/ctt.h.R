@@ -8,8 +8,7 @@ cttOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
         initialize = function(
             dist = "normal",
             sample = 25,
-            repeats = 100,
-            pic = FALSE, ...) {
+            repeats = 100, ...) {
 
             super$initialize(
                 package='clt',
@@ -39,32 +38,24 @@ cttOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 min=1,
                 max=5000,
                 default=100)
-            private$..pic <- jmvcore::OptionBool$new(
-                "pic",
-                pic,
-                default=FALSE)
 
             self$.addOption(private$..dist)
             self$.addOption(private$..sample)
             self$.addOption(private$..repeats)
-            self$.addOption(private$..pic)
         }),
     active = list(
         dist = function() private$..dist$value,
         sample = function() private$..sample$value,
-        repeats = function() private$..repeats$value,
-        pic = function() private$..pic$value),
+        repeats = function() private$..repeats$value),
     private = list(
         ..dist = NA,
         ..sample = NA,
-        ..repeats = NA,
-        ..pic = NA)
+        ..repeats = NA)
 )
 
 cttResults <- if (requireNamespace('jmvcore')) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
-        izpis = function() private$.items[["izpis"]],
         izpis2 = function() private$.items[["izpis2"]],
         picp = function() private$.items[["picp"]],
         pics = function() private$.items[["pics"]]),
@@ -74,25 +65,7 @@ cttResults <- if (requireNamespace('jmvcore')) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Central limit theorem")
-            self$add(jmvcore::Table$new(
-                options=options,
-                name="izpis",
-                title="Summary of source distribution",
-                rows=1,
-                columns=list(
-                    list(
-                        `name`="distrib", 
-                        `title`="Distribution", 
-                        `type`="text"),
-                    list(
-                        `name`="meanp", 
-                        `title`="Mean", 
-                        `type`="number"),
-                    list(
-                        `name`="sdp", 
-                        `title`="St. deviation", 
-                        `type`="number"))))
+                title="Central Limit Theorem")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="izpis2",
@@ -124,18 +97,18 @@ cttResults <- if (requireNamespace('jmvcore')) R6::R6Class(
             self$add(jmvcore::Image$new(
                 options=options,
                 name="picp",
-                title="Source distribution",
-                visible=FALSE,
+                title="Sample means with source distribution",
+                visible=TRUE,
                 width=600,
-                height=400,
+                height=300,
                 renderFun=".picp"))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="pics",
-                title="Distribution of sample means",
-                visible=FALSE,
+                title="Distribution of sample means - closer",
+                visible=TRUE,
                 width=600,
-                height=250,
+                height=300,
                 renderFun=".pics"))}))
 
 cttBase <- if (requireNamespace('jmvcore')) R6::R6Class(
@@ -158,16 +131,14 @@ cttBase <- if (requireNamespace('jmvcore')) R6::R6Class(
                 requiresMissings = FALSE)
         }))
 
-#' Central limit theorem
+#' Central Limit Theorem
 #'
 #' 
 #' @param dist .
 #' @param sample .
 #' @param repeats .
-#' @param pic .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$izpis} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$izpis2} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$picp} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$pics} \tab \tab \tab \tab \tab an image \cr
@@ -175,16 +146,15 @@ cttBase <- if (requireNamespace('jmvcore')) R6::R6Class(
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#' \code{results$izpis$asDF}
+#' \code{results$izpis2$asDF}
 #'
-#' \code{as.data.frame(results$izpis)}
+#' \code{as.data.frame(results$izpis2)}
 #'
 #' @export
 ctt <- function(
     dist = "normal",
     sample = 25,
-    repeats = 100,
-    pic = FALSE) {
+    repeats = 100) {
 
     if ( ! requireNamespace('jmvcore'))
         stop('ctt requires jmvcore to be installed (restart may be required)')
@@ -193,8 +163,7 @@ ctt <- function(
     options <- cttOptions$new(
         dist = dist,
         sample = sample,
-        repeats = repeats,
-        pic = pic)
+        repeats = repeats)
 
     analysis <- cttClass$new(
         options = options,

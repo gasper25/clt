@@ -1,6 +1,6 @@
 ---
 name:  dice
-title: Throwing dice
+title: Throwing Dice
 jrs:   '1.1'
 
 items:
@@ -24,7 +24,7 @@ items:
 
     - name: slikak
       title: Histogram
-      visible: FALSE
+      visible: TRUE
       type: Image
       width: 600
       height: 400

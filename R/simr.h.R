@@ -7,9 +7,7 @@ simrOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
     public = list(
         initialize = function(
             numer = 50,
-            korel = 0.7,
-            ci = FALSE,
-            scat = FALSE, ...) {
+            korel = 0.7, ...) {
 
             super$initialize(
                 package='clt',
@@ -29,30 +27,16 @@ simrOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 min=-1,
                 max=1,
                 default=0.7)
-            private$..ci <- jmvcore::OptionBool$new(
-                "ci",
-                ci,
-                default=FALSE)
-            private$..scat <- jmvcore::OptionBool$new(
-                "scat",
-                scat,
-                default=FALSE)
 
             self$.addOption(private$..numer)
             self$.addOption(private$..korel)
-            self$.addOption(private$..ci)
-            self$.addOption(private$..scat)
         }),
     active = list(
         numer = function() private$..numer$value,
-        korel = function() private$..korel$value,
-        ci = function() private$..ci$value,
-        scat = function() private$..scat$value),
+        korel = function() private$..korel$value),
     private = list(
         ..numer = NA,
-        ..korel = NA,
-        ..ci = NA,
-        ..scat = NA)
+        ..korel = NA)
 )
 
 simrResults <- if (requireNamespace('jmvcore')) R6::R6Class(
@@ -66,7 +50,7 @@ simrResults <- if (requireNamespace('jmvcore')) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Correlation sim")
+                title="Correlation")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="izpis",
@@ -84,27 +68,18 @@ simrResults <- if (requireNamespace('jmvcore')) R6::R6Class(
                     list(
                         `name`="ciL", 
                         `title`="Lower CI (95 %)", 
-                        `type`="number", 
-                        `visible`="(ci)"),
+                        `type`="number"),
                     list(
                         `name`="ciU", 
                         `title`="Upper CI (95 %)", 
-                        `type`="number", 
-                        `visible`="(ci)")),
-                clearWith=list(
-                    "numer",
-                    "korel")))
+                        `type`="number"))))
             self$add(jmvcore::Image$new(
                 options=options,
                 name="scat",
                 title="Scatterplot",
-                visible=FALSE,
                 width=400,
                 height=400,
-                renderFun=".scat",
-                clearWith=list(
-                    "numer",
-                    "korel")))}))
+                renderFun=".scat"))}))
 
 simrBase <- if (requireNamespace('jmvcore')) R6::R6Class(
     "simrBase",
@@ -126,13 +101,11 @@ simrBase <- if (requireNamespace('jmvcore')) R6::R6Class(
                 requiresMissings = FALSE)
         }))
 
-#' Correlation sim
+#' Correlation
 #'
 #' 
 #' @param numer .
 #' @param korel .
-#' @param ci .
-#' @param scat .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$izpis} \tab \tab \tab \tab \tab a table \cr
@@ -148,9 +121,7 @@ simrBase <- if (requireNamespace('jmvcore')) R6::R6Class(
 #' @export
 simr <- function(
     numer = 50,
-    korel = 0.7,
-    ci = FALSE,
-    scat = FALSE) {
+    korel = 0.7) {
 
     if ( ! requireNamespace('jmvcore'))
         stop('simr requires jmvcore to be installed (restart may be required)')
@@ -158,9 +129,7 @@ simr <- function(
 
     options <- simrOptions$new(
         numer = numer,
-        korel = korel,
-        ci = ci,
-        scat = scat)
+        korel = korel)
 
     analysis <- simrClass$new(
         options = options,

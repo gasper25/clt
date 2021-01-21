@@ -1,6 +1,6 @@
 ---
 name:  simr
-title: Correlation sim
+title: Correlation
 jrs:   '1.1'
 
 items:
@@ -18,24 +18,14 @@ items:
       - name: ciL
         title: Lower CI (95 %)
         type: number
-        visible: (ci)
       - name: ciU
         title: Upper CI (95 %)
         type: number
-        visible: (ci)
-      clearWith:
-        - numer
-        - korel
             
     - name: scat
       title: Scatterplot
-      visible: FALSE
       type: Image
       width: 400
       height: 400
       renderFun: .scat
-      clearWith:
-        - numer
-        - korel
-
 ...

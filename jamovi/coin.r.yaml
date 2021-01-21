@@ -1,6 +1,6 @@
 ---
 name:  coin
-title: Tossing coin
+title: Tossing Coin
 jrs:   '1.1'
 
 items:
@@ -28,7 +28,7 @@ items:
 
     - name: slika
       title: Histogram
-      visible: FALSE
+      visible: TRUE
       type: Image
       width: 600
       height: 400

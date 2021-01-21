@@ -4,25 +4,18 @@
 simrClass <- if (requireNamespace('jmvcore')) R6::R6Class(
     "simrClass",
     inherit = simrBase,
-    private = list(.init = function() {
-        if(self$options$scat)  {self$results$scat$setVisible(visible = TRUE)}
-  		},
-        .run = function() {
+    private = list(.run = function() {
 		
 		r <- self$options$korel
 		n <- self$options$numer
-		v <- self$options$ci
 		
-		table <- self$results$izpis
-		#test if we already ran the analysis
-		if(! table$isFilled(rowNo=1)) {
 		
 		#create normally distributed sample
 		a <- rnorm(n,mean=50,sd=10)
 		
 		# special case - if correlation is 0
 		if(r == 0) {
-		b <- rnorm(n,mean=50,sd=100)
+		b <- rnorm(n,mean=50,sd=10)
 		} else {
 		#create normally distributed error variance
 		e <- rnorm(n,mean=0,sd=sqrt((100/r^2)*(1-r^2)))
@@ -32,42 +25,11 @@ simrClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 			b <- a+e
 			}
 		}
-		
-		#this loop improves our simulation of correlation
-		#tolerance is fixed
-		tol <- .01
-		#find p worst cases and improve them
-		p <- max(50,n/10)
-		for(i in 1:p){
-		k <- cor(a,b)
-		if((abs(r-k)>tol)) { #if we differ too much...
-			#create pairs
-			prs <- (a-mean(a))*(b-mean(b))
-			if(abs(r)>abs(k)){ #if we have lower k
-				if(r < 0) { #if we are nearing negative correlation...
-					# take smallest negative product and increase one residual
-					b[which(max(prs<0)==prs)] <- 1.03*b[which(max(prs<0)==prs)]
-					} else {
-					# take smallest positive product and increase one residual
-					b[which(min(prs>0)==prs)] <- 1.03*b[which(min(prs>0)==prs)]
-					}
-			} else {
-				if(r < 0) { #if we are nearing negative correlation...
-					# take smallest negative product and decrease one residual
-					b[which(min(prs<0)==prs)] <- b[which(min(prs<0)==prs)]/1.03
-					} else {
-					# take smallest positive product and decrease one residual
-					b[which(max(prs>0)==prs)] <- b[which(max(prs>0)==prs)]/1.03
-					}
-			}
-			
-		}}
-		
-		k <- cor(a,b)
+		#make variances same size
+		b <- scale(b)*10+50
+	
+		k <- stats::cor(a,b, use="pair")[1]
 
-		
-
-		
 		
 		#obtain CI through Fisher's z transformation
 		# z <- log(sqrz((1+r)/(1-r)))
@@ -81,35 +43,28 @@ simrClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 		
 		
 		# populate tabelo izpis
+		
+		table <- self$results$izpis
+		table$setRow(rowNo=1, values=list(numer=n ,kor=k, ciL=cl, ciU=cu))
+				
 
-		if(v) {
-		table$setRow(rowNo=1, values=list(numer=n,kor=k, ciL=cl, ciU=cu))
-		} else {
-		table$setRow(rowNo=1, values=list(numer=n,kor=k))
-		}
-		
-		#save for situations 'out of the loop'
-		
-		table$setState(list(k,a,b))
-		}	
-		
-		# 'restore' when not through the loop
-		k <- table$state[[1]]
-		a <- table$state[[2]]
-		b <- table$state[[3]]	
-		
 		# slika   
-		if(self$options$scat){
 		plotData <- data.frame("a"=a,"b"=b)
 		scatt <- self$results$scat
 		scatt$setState(plotData)
-		}
         },
-		.scat = function(scatt,...){
+		.scat = function(scatt, ggtheme, theme,...){
 		plotData <- scatt$state
-		graphics::plot(plotData$a,plotData$b,pch=21,cex=1.5,bg="lightblue",xlab="A",ylab="B",las=1)
-		graphics::abline(lsfit(plotData$a,plotData$b),col="blue",lwd=1.5)
-		TRUE
+		koef <- lsfit(x=plotData$a,y=plotData$b)$coef
+		#graphics::plot(plotData$a,plotData$b,pch=21,cex=1.5,bg="lightblue",xlab="A",ylab="B",las=1)
+		#graphics::abline(lsfit(plotData$a,plotData$b),col="blue",lwd=1.5)
+		#TRUE
+		plot <- ggplot2::ggplot(data=plotData, ggplot2::aes(x=a, y=b)) + 
+		ggplot2::geom_point(pch=21, size=4,fill="darkred", alpha= .4) + ggtheme + 
+		ggplot2::geom_abline(intercept=koef[1], slope=koef[2], col = "darkred", size = 1)
+		
+		
+		return(plot)
 		}
 		) 
 )

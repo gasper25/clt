@@ -1,37 +1,34 @@
-title: Hypothesis sim
+title: Testing Hypothesis
 name: simh
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
 children:
   - type: LayoutBox
-    margin: large
+    margin: small
+    fitToGrid: true
     children:
       - type: TextBox
         name: dif
         format: number
   - type: LayoutBox
-    margin: large
+    margin: small
+    fitToGrid: true
     children:
       - type: TextBox
         name: sam
         format: number
   - type: LayoutBox
-    margin: large
+    margin: small
+    fitToGrid: true
     children:
       - type: TextBox
         name: numer
         format: number
   - type: LayoutBox
-    margin: large
+    margin: small
+    fitToGrid: true
     children:
       - type: TextBox
         name: pval
         format: number
-  - type: LayoutBox
-    margin: large
-    children:
-      - type: CheckBox
-        name: his
-      - type: CheckBox
-        name: plotci

@@ -1,13 +1,13 @@
 ---
 name:  coin
-title: Tossing coin
+title: Tossing Coin
 menuGroup: clt
 version: '1.0.0'
 jas: '1.2'
 
 options:
     - name: trial
-      title: No. of trials (1-50.000)
+      title: No. of trials (1-50000)
       type: Integer
       min: 1
       max: 50000
@@ -39,10 +39,5 @@ options:
       min: 0.01
       max: .999
       default: .5
-      
-    - name: slika
-      title: Histogram
-      type: Bool
-      default: FALSE  
-
+ 
 ...

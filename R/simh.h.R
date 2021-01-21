@@ -9,9 +9,7 @@ simhOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
             dif = 0,
             sam = 15,
             numer = 20,
-            pval = 0.05,
-            his = FALSE,
-            plotci = FALSE, ...) {
+            pval = 0.05, ...) {
 
             super$initialize(
                 package='clt',
@@ -43,43 +41,28 @@ simhOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 min=0,
                 max=0.3,
                 default=0.05)
-            private$..his <- jmvcore::OptionBool$new(
-                "his",
-                his,
-                default=FALSE)
-            private$..plotci <- jmvcore::OptionBool$new(
-                "plotci",
-                plotci,
-                default=FALSE)
 
             self$.addOption(private$..dif)
             self$.addOption(private$..sam)
             self$.addOption(private$..numer)
             self$.addOption(private$..pval)
-            self$.addOption(private$..his)
-            self$.addOption(private$..plotci)
         }),
     active = list(
         dif = function() private$..dif$value,
         sam = function() private$..sam$value,
         numer = function() private$..numer$value,
-        pval = function() private$..pval$value,
-        his = function() private$..his$value,
-        plotci = function() private$..plotci$value),
+        pval = function() private$..pval$value),
     private = list(
         ..dif = NA,
         ..sam = NA,
         ..numer = NA,
-        ..pval = NA,
-        ..his = NA,
-        ..plotci = NA)
+        ..pval = NA)
 )
 
 simhResults <- if (requireNamespace('jmvcore')) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
         izpis = function() private$.items[["izpis"]],
-        his = function() private$.items[["his"]],
         plotci = function() private$.items[["plotci"]]),
     private = list(),
     public=list(
@@ -87,7 +70,7 @@ simhResults <- if (requireNamespace('jmvcore')) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Hypothesis sim")
+                title="Testing Hypothesis")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="izpis",
@@ -125,22 +108,8 @@ simhResults <- if (requireNamespace('jmvcore')) R6::R6Class(
                     "pval")))
             self$add(jmvcore::Image$new(
                 options=options,
-                name="his",
-                title="Distribution of differences in means",
-                visible=FALSE,
-                width=600,
-                height=400,
-                renderFun=".his",
-                clearWith=list(
-                    "dif",
-                    "sam",
-                    "numer",
-                    "pval")))
-            self$add(jmvcore::Image$new(
-                options=options,
                 name="plotci",
                 title="Confidence intervals",
-                visible=FALSE,
                 width=600,
                 height=400,
                 renderFun=".plotci",
@@ -170,19 +139,16 @@ simhBase <- if (requireNamespace('jmvcore')) R6::R6Class(
                 requiresMissings = FALSE)
         }))
 
-#' Hypothesis sim
+#' Testing Hypothesis
 #'
 #' 
 #' @param dif .
 #' @param sam .
 #' @param numer .
 #' @param pval .
-#' @param his .
-#' @param plotci .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$izpis} \tab \tab \tab \tab \tab a table \cr
-#'   \code{results$his} \tab \tab \tab \tab \tab an image \cr
 #'   \code{results$plotci} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
@@ -197,9 +163,7 @@ simh <- function(
     dif = 0,
     sam = 15,
     numer = 20,
-    pval = 0.05,
-    his = FALSE,
-    plotci = FALSE) {
+    pval = 0.05) {
 
     if ( ! requireNamespace('jmvcore'))
         stop('simh requires jmvcore to be installed (restart may be required)')
@@ -209,9 +173,7 @@ simh <- function(
         dif = dif,
         sam = sam,
         numer = numer,
-        pval = pval,
-        his = his,
-        plotci = plotci)
+        pval = pval)
 
     analysis <- simhClass$new(
         options = options,

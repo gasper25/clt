@@ -8,8 +8,7 @@ diceOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
         initialize = function(
             trial = 1000,
             dice = 3,
-            sides = 6,
-            slikak = FALSE, ...) {
+            sides = 6, ...) {
 
             super$initialize(
                 package='clt',
@@ -35,26 +34,19 @@ diceOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 min=2,
                 max=10,
                 default=6)
-            private$..slikak <- jmvcore::OptionBool$new(
-                "slikak",
-                slikak,
-                default=FALSE)
 
             self$.addOption(private$..trial)
             self$.addOption(private$..dice)
             self$.addOption(private$..sides)
-            self$.addOption(private$..slikak)
         }),
     active = list(
         trial = function() private$..trial$value,
         dice = function() private$..dice$value,
-        sides = function() private$..sides$value,
-        slikak = function() private$..slikak$value),
+        sides = function() private$..sides$value),
     private = list(
         ..trial = NA,
         ..dice = NA,
-        ..sides = NA,
-        ..slikak = NA)
+        ..sides = NA)
 )
 
 diceResults <- if (requireNamespace('jmvcore')) R6::R6Class(
@@ -68,7 +60,7 @@ diceResults <- if (requireNamespace('jmvcore')) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Throwing dice")
+                title="Throwing Dice")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="izpis",
@@ -95,7 +87,7 @@ diceResults <- if (requireNamespace('jmvcore')) R6::R6Class(
                 options=options,
                 name="slikak",
                 title="Histogram",
-                visible=FALSE,
+                visible=TRUE,
                 width=600,
                 height=400,
                 renderFun=".slikak"))}))
@@ -120,13 +112,12 @@ diceBase <- if (requireNamespace('jmvcore')) R6::R6Class(
                 requiresMissings = FALSE)
         }))
 
-#' Throwing dice
+#' Throwing Dice
 #'
 #' 
 #' @param trial .
 #' @param dice .
 #' @param sides .
-#' @param slikak .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$izpis} \tab \tab \tab \tab \tab a table \cr
@@ -143,8 +134,7 @@ diceBase <- if (requireNamespace('jmvcore')) R6::R6Class(
 dice <- function(
     trial = 1000,
     dice = 3,
-    sides = 6,
-    slikak = FALSE) {
+    sides = 6) {
 
     if ( ! requireNamespace('jmvcore'))
         stop('dice requires jmvcore to be installed (restart may be required)')
@@ -153,8 +143,7 @@ dice <- function(
     options <- diceOptions$new(
         trial = trial,
         dice = dice,
-        sides = sides,
-        slikak = slikak)
+        sides = sides)
 
     analysis <- diceClass$new(
         options = options,

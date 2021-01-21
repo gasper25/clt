@@ -1,28 +1,26 @@
-title: Tossing coin
+title: Tossing Coin
 name: coin
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
 children:
   - type: LayoutBox
-    margin: large
+    margin: small
+    fitToGrid: true
     children:
       - type: TextBox
         name: trial
         format: number
   - type: LayoutBox
-    margin: large
+    margin: small
+    fitToGrid: true
     children:
       - type: ComboBox
         name: coins
   - type: LayoutBox
-    margin: large
+    margin: small
+    fitToGrid: true
     children:
       - type: TextBox
         name: prob
         format: number
-  - type: LayoutBox
-    margin: large
-    children:
-      - type: CheckBox
-        name: slika

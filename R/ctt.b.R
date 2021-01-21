@@ -4,88 +4,113 @@
 cttClass <- if (requireNamespace('jmvcore')) R6::R6Class(
     "cttClass",
     inherit = cttBase,
-    private = list(.init = function() {
-        if(self$options$pic)  {
-		self$results$picp$setVisible(visible = TRUE)
-		self$results$pics$setVisible(visible = TRUE)
-		}
-        },
+    private = list(
         .run = function() {
 
 			d <- self$options$dist
 			s <- self$options$sample
 			r <- self$options$repeats
 			
-			#create simulated distribution N=10000
-			if(d == "normal"){pop <- rnorm(10000)
-			pop <- pop[(pop < 3.5)&(pop > -3.5)]}
-			if(d == "uniform"){pop <- runif(10000)}
-			if(d == "lognormal"){pop <- rlnorm(10000)
-			pop <- pop[pop<10]}
-			if(d == "geometric"){pop <- rgeom(10000,.5)
-			pop <- pop[pop<8]}
-			if(d == "binomial"){pop <- rbinom(10000,100,.5)
-			pop <- pop[(pop < 70)&(pop > 30)]}
-			
 			#sample...
 			rez <- vector(mode="numeric",length=r)
-			for(i in 1:r){
-			rez[i] <- mean(sample(pop,s,replace=FALSE))
-			}
+			for(i in 1:r){		
 			
-		# populate tabelo izpis
-		table <- self$results$izpis
-		table$setRow(rowNo=1, values=list(distrib=d,meanp=mean(pop), sdp=sd(pop)))
+				if(d == "normal"){rez[i] <- mean(rnorm(s))}
+				if(d == "uniform"){rez[i] <- mean(runif(s))}
+				if(d == "lognormal"){rez[i] <- mean(rlnorm(s))}
+				if(d == "geometric"){rez[i] <- mean(rgeom(s,.5))}
+				if(d == "binomial"){rez[i] <- mean(rbinom(s,100,.5))}
+				}
+			
+		# calculate serror
+				if(d == "normal"){serror <- 1/sqrt(s)}
+				if(d == "uniform"){serror <- sqrt((1/12)/s)} #var=1/12*(b-a)^2 (b=1, a=0)
+				if(d == "lognormal"){serror <- sqrt(exp(1)*(exp(1)-1)/s)} #var=exp(1)*(exp(1)-1)
+				if(d == "geometric"){serror <- sqrt(2/s)} # var=(1-p)/p^2
+				if(d == "binomial"){serror <- sqrt(25/s)} #var= np(1-p)
 		
 		# populate tabelo izpis2
 		table2 <- self$results$izpis2
-		table2$setRow(rowNo=1, values=list(size=s,repeats=r, means=mean(rez), sds=sd(rez), serror=sd(pop)/sqrt(s)))
+		table2$setRow(rowNo=1, values=list(size=s,repeats=r, means=mean(rez), sds=sd(rez), serror=serror))
 				
         # slika   
-		if(self$options$pic){
-		hisp <- self$results$picp
-		xl <- c(min(pop),max(pop))
-		plotData1 <- list(pop,xl)
-		hisp$setState(plotData1)
 		hiss <- self$results$pics
-		plotData2 <- list(rez,xl)
-		hiss$setState(plotData2)	
-		}
+		hisp <- self$results$picp
+		hiss$setState(rez)	
+		hisp$setState(rez)
 	        },
-				.picp = function(hisp,...){
-		plotData1 <- hisp$state
-		pop <- plotData1[[1]]
-		xl <- plotData1[[2]]
+				.picp = function(hisp, ggtheme, theme,...){
+			pop <- data.frame("x"=hisp$state)
+				rez <- data.frame("x"=as.numeric(hisp$state))
+				s <- self$options$sample
+				mi <- mean(rez$x,na.rm=TRUE)
+				sigma <- sd(rez$x, na.rm=TRUE) 
+				nn <- nrow(rez)
+				inter <- ifelse(nn<200,20,round(nn/10,0))
+				b <- graphics::hist(rez$x,br=inter,plot=FALSE)
+				# #small hack for sizes s>10 to get normal curve on track...
+				dd <- nn*dnorm(seq(min(b$mids),max(b$mids),length.out=inter),mean=mi, sd=sigma)/inter
+				v <- max(dd)
+				z <- quantile(b$counts,.975) #new height for normal curve
+				v1 <- z/v
+				visek <- max(v1*dd, b$counts)
+			
+			d <- self$options$dist
+				if(d == "normal"){dtf <- data.frame("a"=seq(-4,4,length.out=100), "b"=2*visek*dnorm(seq(-4,4,length.out=100),0,1))}
+				if(d == "uniform"){dtf <- data.frame("a"=seq(0,1,length.out=100), "b"=visek*.7*dunif(seq(0,1,length.out=100)))}
+				if(d == "lognormal"){dtf <- data.frame("a"=seq(0,30,length.out=100), "b"=visek*dlnorm(seq(0,30,length.out=100)))}
+				if(d == "geometric"){dtf <- data.frame("a"=0:15, "b"=visek*dgeom(0:15,.5))}
+				if(d == "binomial"){dtf <- data.frame("a"=25:75, "b"=visek*15*dbinom(25:75,100,.5))}
 		
-		b <- graphics::hist(pop,xlim=xl,main="",col="goldenrod1",las=1, xlab="Value", ylab="Frequency",br=70)
-		#graphics::legend("topright",legend=c("expected","normal"),col=c("blue","red"),lty=1,lwd=3,bty="n")
-		TRUE
+		plot <- ggplot2::ggplot(data=rez) +
+		ggplot2::geom_histogram(col="blue4",fill=theme$color[2],alpha = .2, breaks=b$breaks, ggplot2::aes(x=x)) +
+		ggplot2::geom_line(data=dtf, size=1, ggplot2::aes(x=a,y=b, colour="distribution")) + 
+		ggplot2::xlab("Value") +
+		ggplot2::ylab("Count") +
+		ggplot2::scale_colour_manual(values=c(distribution="#56B4E9")) + ggtheme +
+		ggplot2::theme(legend.title=ggplot2::element_blank())
+		
+		return(plot)
 		},
 
-				.pics = function(hiss,xl,...){
-		plotData2 <- hiss$state
-		rez <- plotData2[[1]]
-		xl <- plotData2[[2]]
+		.pics = function(hiss, ggtheme, theme,...){
+		rez <- data.frame("x"=as.numeric(hiss$state))
 		s <- self$options$sample
-		#rez <- hiss$state
-		mi <- mean(rez,na.rm=TRUE)
-		sigma <- sd(rez, na.rm=TRUE) 
-		nn <- length(rez)
+		mi <- mean(rez$x,na.rm=TRUE)
+		sigma <- sd(rez$x, na.rm=TRUE) 
+		nn <- nrow(rez)
 		inter <- ifelse(nn<200,20,round(nn/10,0))
-		inter <- min(inter,length(unique(rez)))
-		#interval <- ifelse(nn<200,10,round(nn^.5,0))
-		#inter <- ifelse(s<10,inter,inter*15/s)
-		b <- graphics::hist(rez,br=inter,plot=FALSE)
-		#small hack for sizes s>10 to get normal curve on track...
-		v <- max(nn*dnorm(seq(min(b$mids),max(b$mids),length.out=inter),mean=mi, sd=sigma)/inter)
+		# #inter <- min(inter,length(unique(rez$x)))
+		# #interval <- ifelse(nn<200,10,round(nn^.5,0))
+		# #inter <- ifelse(s<10,inter,inter*15/s)
+		# #inter <- ifelse(s<10,inter,inter*15/s)
+		b <- graphics::hist(rez$x,br=inter,plot=FALSE)
+		# #small hack for sizes s>10 to get normal curve on track...
+		dd <- nn*dnorm(seq(min(b$mids),max(b$mids),length.out=inter),mean=mi, sd=sigma)/inter
+		v <- max(dd)
 		z <- quantile(b$counts,.975) #new height for normal curve
 		v1 <- z/v
-		visek <- max(v1*nn*dnorm(seq(min(b$mids),max(b$mids),length.out=inter),mean=mi, sd=sigma)/inter, b$counts)
-		graphics::plot(b,xlim=xl,ylim=c(0,visek),main="",col="darkred",las=1, xlab="Value", ylab="Frequency")
-		graphics::legend("topright",legend=c("normal"),col=c("red"),lty=1,lwd=3,bty="n")
-		graphics::lines(seq(min(b$mids),max(b$mids),length.out=inter),v1*nn*dnorm(seq(min(b$mids),max(b$mids),length.out=inter),mean=mi, sd=sigma)/inter,lwd=2,col="red",lty=1)
+		visek <- max(v1*dd, b$counts)
 		
-		TRUE
+		dtf <- data.frame("a"=seq(min(b$mids),max(b$mids),length.out=inter),"b"=v1*nn*dnorm(seq(min(b$mids),max(b$mids),length.out=inter),mean=mi, sd=sigma)/inter)
+		# 
+		#  graphics::plot(b,ylim=c(0,visek),main="",col="darkred",las=1, xlab="Value", ylab="Frequency")
+		#  graphics::legend("topright",legend=c("normal"),col=c("red"),lty=1,lwd=3,bty="n")
+		#  graphics::lines(seq(min(b$mids),max(b$mids),length.out=inter),v1*nn*dnorm(seq(min(b$mids),max(b$mids),length.out=inter),mean=mi, sd=sigma)/inter,lwd=2,col="red",lty=1)
+		#  # 
+		#  TRUE
+		
+		plot <- ggplot2::ggplot(data=rez) +
+		ggplot2::geom_histogram(col="blue4", fill=theme$color[2],alpha = .2, breaks=b$breaks, ggplot2::aes(x=x)) +
+		ggplot2::geom_line(data=dtf, size=1, ggplot2::aes(x=a,y=b, colour="normal")) + 
+		ggplot2::xlab("Value") +
+		ggplot2::ylab("Count") +
+		ggplot2::scale_colour_manual(values=c(normal="#7FFFD4")) +	ggtheme +
+		ggplot2::theme(legend.title=ggplot2::element_blank())
+	
+		
+		return(plot)
+		
 		}		
 		) 
 )

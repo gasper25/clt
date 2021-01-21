@@ -8,8 +8,7 @@ coinOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
         initialize = function(
             trial = 1000,
             coins = "n=20",
-            prob = 0.5,
-            slika = FALSE, ...) {
+            prob = 0.5, ...) {
 
             super$initialize(
                 package='clt',
@@ -41,26 +40,19 @@ coinOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 min=0.01,
                 max=0.999,
                 default=0.5)
-            private$..slika <- jmvcore::OptionBool$new(
-                "slika",
-                slika,
-                default=FALSE)
 
             self$.addOption(private$..trial)
             self$.addOption(private$..coins)
             self$.addOption(private$..prob)
-            self$.addOption(private$..slika)
         }),
     active = list(
         trial = function() private$..trial$value,
         coins = function() private$..coins$value,
-        prob = function() private$..prob$value,
-        slika = function() private$..slika$value),
+        prob = function() private$..prob$value),
     private = list(
         ..trial = NA,
         ..coins = NA,
-        ..prob = NA,
-        ..slika = NA)
+        ..prob = NA)
 )
 
 coinResults <- if (requireNamespace('jmvcore')) R6::R6Class(
@@ -74,7 +66,7 @@ coinResults <- if (requireNamespace('jmvcore')) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Tossing coin")
+                title="Tossing Coin")
             self$add(jmvcore::Table$new(
                 options=options,
                 name="izpis",
@@ -105,7 +97,7 @@ coinResults <- if (requireNamespace('jmvcore')) R6::R6Class(
                 options=options,
                 name="slika",
                 title="Histogram",
-                visible=FALSE,
+                visible=TRUE,
                 width=600,
                 height=400,
                 renderFun=".slika"))}))
@@ -130,13 +122,12 @@ coinBase <- if (requireNamespace('jmvcore')) R6::R6Class(
                 requiresMissings = FALSE)
         }))
 
-#' Tossing coin
+#' Tossing Coin
 #'
 #' 
 #' @param trial .
 #' @param coins .
 #' @param prob .
-#' @param slika .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$izpis} \tab \tab \tab \tab \tab a table \cr
@@ -153,8 +144,7 @@ coinBase <- if (requireNamespace('jmvcore')) R6::R6Class(
 coin <- function(
     trial = 1000,
     coins = "n=20",
-    prob = 0.5,
-    slika = FALSE) {
+    prob = 0.5) {
 
     if ( ! requireNamespace('jmvcore'))
         stop('coin requires jmvcore to be installed (restart may be required)')
@@ -163,8 +153,7 @@ coin <- function(
     options <- coinOptions$new(
         trial = trial,
         coins = coins,
-        prob = prob,
-        slika = slika)
+        prob = prob)
 
     analysis <- coinClass$new(
         options = options,

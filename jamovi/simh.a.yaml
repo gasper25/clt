@@ -1,6 +1,6 @@
 ---
 name:  simh
-title: Hypothesis sim
+title: Testing Hypothesis
 menuGroup: clt
 version: '1.0.0'
 jas: '1.2'
@@ -33,14 +33,5 @@ options:
       min: 0
       max: .3
       default: 0.05
-     
-    - name: his
-      title: Distribution of differences
-      type: Bool
-      default: false
-    - name: plotci
-      title: CI plot
-      type: Bool
-      default: false
-
+ 
 ...

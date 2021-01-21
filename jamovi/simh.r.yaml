@@ -1,6 +1,6 @@
 ---
 name:  simh
-title: Hypothesis sim
+title: Testing Hypothesis
 jrs:   '1.1'
 
 items:
@@ -33,21 +33,9 @@ items:
         - numer
         - pval
 
-    - name: his
-      title: Distribution of differences in means
-      visible: FALSE
-      type: Image
-      width: 600
-      height: 400
-      renderFun: .his
-      clearWith:
-        - dif
-        - sam
-        - numer
-        - pval
+
     - name: plotci
       title: Confidence intervals
-      visible: FALSE
       type: Image
       width: 600
       height: 400
@@ -57,6 +45,5 @@ items:
         - sam
         - numer
         - pval
-
 
 ...

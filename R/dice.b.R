@@ -4,9 +4,7 @@
 diceClass <- if (requireNamespace('jmvcore')) R6::R6Class(
     "diceClass",
     inherit = diceBase,
-    private = list(.init = function() {
-        if(self$options$slikak)  self$results$slikak$setVisible(visible = TRUE)
-        },
+    private = list(
         .run = function() {
 			k <- self$options$trial
 			n <- self$options$dice
@@ -23,13 +21,12 @@ diceClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 		table$setRow(rowNo=1, values=list(trials=k,dic=n, side=s, samplespace=s^n))
 		
         # slika   
-		if(self$options$slikak){
 		his1 <- self$results$slikak
-		his1$setState(rez)}
+		his1$setState(rez)
 		
         },
-		.slikak = function(his1,...){
-		nn <- his1$state
+		.slikak = function(his1, ggtheme, theme,...){
+		nn <- data.frame("x"=as.numeric(his1$state))
 		k <- self$options$trial
 		n <- self$options$dice
 		s <- self$options$sides
@@ -64,15 +61,24 @@ diceClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 				rez2 <- as.data.frame(table(vsota))
 				rez2$Freq <- rez2$Freq/sum(rez2$Freq)
 		mi <- mean(vsota)
-		sigma <- sd(vsota)		
-		b <- graphics::hist(nn,br=(n:(s*n+1))-.5)
-		visek <- max(k*rez2$Freq,k*dnorm(seq(n,(s*n),.2),mean=mi, sd=sigma),b$counts)
-		graphics::plot(b,ylim=c(0,visek),main="",col="darkgreen",las=1, xlab="Sum", ylab="Frequency" )
-		graphics::legend("topright",legend=c("expected","normal"),col=c("blue","red"),lty=1,lwd=3,bty="n")
+		sigma <- sd(vsota)	
+		brk <- (n:(s*n+1))-.5
+		brk2 <- seq(min(brk),max(brk),length.out=100)
+		df2 <- data.frame("a"=brk2,"b"=dnorm(brk2,mi,sigma)*k)
+		df3 <- data.frame("m"=n:(s*n),"j"=rez2$Freq*k)
+		
+		b <- graphics::hist(nn$x,br=brk) #samo za maksimum - visek
+		visek <- max(df3$j,df2$b,b$counts)
+		
+		plot <- ggplot2::ggplot(data=nn)+
+		ggplot2::geom_histogram(col="blue4",fill=theme$color[2],alpha = .2,breaks=brk, ggplot2::aes(x=x))+ 
+		ggplot2::geom_line(data=df2,size=1, ggplot2::aes(x=a, y=b, colour="normal"))+
+		ggplot2::geom_line(data=df3,size=1, ggplot2::aes(x=m, y=j, colour="expected"))+
+		ggplot2::scale_colour_manual(values=c(normal="#E69F00",expected="#56B4E9"))+ 
+		ggplot2::ylim(0,visek) + ggplot2::xlab("Sum") + ggplot2::ylab("Count")+ ggtheme +
+		ggplot2::theme(legend.title=ggplot2::element_blank())  
+		
+		return(plot)
 
-		# .2, da je bolj zglajena
-		graphics::lines(seq(n,(s*n),.2),k*dnorm(seq(n,(s*n),.2),mean=mi, sd=sigma),lwd=2,col="red",lty=1)
-		graphics::lines(n:(s*n),k*rez2$Freq,lwd=2,col="blue",lty=2)
-		TRUE
 		})
 )
