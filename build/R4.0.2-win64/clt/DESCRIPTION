@@ -1,13 +1,15 @@
 Package: clt
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.0.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Demonstrations
+Version: 1.0.0
+Author: Gasper Cankar
+Maintainer: Gasper Cankar <gasper@cankar.org>
+Description: Simple simulations to help students visualize first lessons in probability:
+  how and when binomial distribution approximates normal and how Law of big
+  numbers and Central Limit Theorem work. Students can visualize correlations of
+  different sizes and grasp important concepts when testing hypotheses.
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Imports: jmvcore (>= 0.8.5), R6
-Built: R 4.0.2; ; 2021-01-14 07:26:40 UTC; windows
+Imports: jmvcore (>= 0.8.5), R6, ggplot2
+Built: R 4.0.2; ; 2021-01-21 13:43:17 UTC; windows

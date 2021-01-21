@@ -3,7 +3,7 @@
 
 'use strict';
 
-const options = [{"name":"dist","title":"Source distribution","type":"List","options":[{"title":"normal","name":"normal"},{"title":"uniform","name":"uniform"},{"title":"geometric","name":"geometric"},{"title":"lognormal","name":"lognormal"},{"title":"binomial","name":"binomial"}],"default":"normal"},{"name":"sample","title":"Sample size (1-200)","type":"Integer","min":1,"max":200,"default":25},{"name":"repeats","title":"No. of trials (1-5000)","type":"Integer","min":1,"max":5000,"default":100},{"name":"pic","title":"Histogram","type":"Bool","default":false}];
+const options = [{"name":"dist","title":"Source distribution","type":"List","options":[{"title":"normal","name":"normal"},{"title":"uniform","name":"uniform"},{"title":"geometric","name":"geometric"},{"title":"lognormal","name":"lognormal"},{"title":"binomial","name":"binomial"}],"default":"normal"},{"name":"sample","title":"Sample size (1-200)","type":"Integer","min":1,"max":200,"default":25},{"name":"repeats","title":"No. of trials (1-5000)","type":"Integer","min":1,"max":5000,"default":100}];
 
 const view = function() {
     
@@ -21,7 +21,7 @@ const view = function() {
 
 view.layout = ui.extend({
 
-    label: "Central limit theorem",
+    label: "Central Limit Theorem",
     jus: "3.0",
     type: "root",
     stage: 0, //0 - release, 1 - development, 2 - proposed
@@ -29,7 +29,8 @@ view.layout = ui.extend({
 		{
 			type: DefaultControls.LayoutBox,
 			typeName: 'LayoutBox',
-			margin: "large",
+			margin: "small",
+			fitToGrid: true,
 			controls: [
 				{
 					type: DefaultControls.ComboBox,
@@ -41,7 +42,8 @@ view.layout = ui.extend({
 		{
 			type: DefaultControls.LayoutBox,
 			typeName: 'LayoutBox',
-			margin: "large",
+			margin: "small",
+			fitToGrid: true,
 			controls: [
 				{
 					type: DefaultControls.TextBox,
@@ -54,25 +56,14 @@ view.layout = ui.extend({
 		{
 			type: DefaultControls.LayoutBox,
 			typeName: 'LayoutBox',
-			margin: "large",
+			margin: "small",
+			fitToGrid: true,
 			controls: [
 				{
 					type: DefaultControls.TextBox,
 					typeName: 'TextBox',
 					name: "repeats",
 					format: FormatDef.number
-				}
-			]
-		},
-		{
-			type: DefaultControls.LayoutBox,
-			typeName: 'LayoutBox',
-			margin: "large",
-			controls: [
-				{
-					type: DefaultControls.CheckBox,
-					typeName: 'CheckBox',
-					name: "pic"
 				}
 			]
 		}
