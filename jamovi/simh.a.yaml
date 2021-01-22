@@ -1,7 +1,7 @@
 ---
 name:  simh
 title: Testing Hypothesis
-menuGroup: clt
+menuGroup: Demonstrations
 version: '1.0.0'
 jas: '1.2'
 

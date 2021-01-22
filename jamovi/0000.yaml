@@ -17,31 +17,31 @@ analyses:
   - title: Tossing Coin
     name: coin
     ns: clt
-    menuGroup: clt
+    menuGroup: Demonstrations
     menuSubgroup: CLT
     menuTitle: Tossing Coin
   - title: Throwing Dice
     name: dice
     ns: clt
-    menuGroup: clt
+    menuGroup: Demonstrations
     menuSubgroup: CLT
     menuTitle: Throwing Dice
   - title: Central Limit Theorem
     name: ctt
     ns: clt
-    menuGroup: clt
+    menuGroup: Demonstrations
     menuSubgroup: CLT
     menuTitle: Central Limit Theorem
   - title: Correlation
     name: simr
     ns: clt
-    menuGroup: clt
+    menuGroup: Demonstrations
     menuSubgroup: Correlation
     menuTitle: Correlation
   - title: Testing Hypothesis
     name: simh
     ns: clt
-    menuGroup: clt
+    menuGroup: Demonstrations
     menuSubgroup: Hypothesis
     menuTitle: Testing Hypothesis
 usesNative: true
