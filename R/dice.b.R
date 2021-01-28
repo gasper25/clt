@@ -71,11 +71,11 @@ diceClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 		visek <- max(df3$j,df2$b,b$counts)
 		
 		plot <- ggplot2::ggplot(data=nn)+
-		ggplot2::geom_histogram(col="blue4",fill=theme$color[2],alpha = .2,breaks=brk, ggplot2::aes(x=x))+ 
+		ggplot2::geom_histogram(col=theme$color[2],fill=theme$fill[2],alpha = .8,breaks=brk, ggplot2::aes(x=x))+ 
 		ggplot2::geom_line(data=df2,size=1, ggplot2::aes(x=a, y=b, colour="normal"))+
-		ggplot2::geom_line(data=df3,size=1, ggplot2::aes(x=m, y=j, colour="expected"))+
+		ggplot2::geom_line(data=df3,size=1, ggplot2::aes(x=m, y=j, colour="expected"))+ ggtheme +
 		ggplot2::scale_colour_manual(values=c(normal="#E69F00",expected="#56B4E9"))+ 
-		ggplot2::ylim(0,visek) + ggplot2::xlab("Sum") + ggplot2::ylab("Count")+ ggtheme +
+		ggplot2::ylim(0,visek) + ggplot2::xlab("Sum") + ggplot2::ylab("Count")+ 
 		ggplot2::theme(legend.title=ggplot2::element_blank())  
 		
 		return(plot)

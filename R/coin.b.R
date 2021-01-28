@@ -42,7 +42,7 @@ coinClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 
 		
 		plot <- ggplot2::ggplot(data=nn)+
-		ggplot2::geom_histogram(col="darkgreen",fill=theme$color[2],alpha = .2,breaks=brk, ggplot2::aes(x=x))+ 
+		ggplot2::geom_histogram(col=theme$color[2],fill=theme$fill[2],alpha = .8,breaks=brk, ggplot2::aes(x=x))+ 
 		ggplot2::geom_line(data=df2,size=1, ggplot2::aes(x=a, y=b, colour="normal"))+ 
 		ggplot2::xlab("Sum")+ 
 		ggplot2::ylab("Count")+

@@ -12,4 +12,4 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports: jmvcore (>= 0.8.5), R6, ggplot2
-Built: R 4.0.2; ; 2021-01-21 13:43:17 UTC; windows
+Built: R 4.0.2; ; 2021-01-28 10:40:22 UTC; windows

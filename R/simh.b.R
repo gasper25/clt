@@ -68,7 +68,7 @@ simhClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 		#     TRUE
 		
 		plot <- ggplot2::ggplot(data=rez) + 
-		ggplot2::geom_point(size=2, pch=21, fill="darkred", ggplot2::aes(x=z,y=r)) + 
+		ggplot2::geom_point(size=2, pch=21, fill=theme$color[2], ggplot2::aes(x=z,y=r)) + 
 		ggplot2::geom_segment(ggplot2::aes(x=z,y=c1,xend=z,yend=c2),size=.5, col=c("darkgray","red")[ifelse(rez$p<(pval+.0001),2,1)]) + 
 		ggplot2::geom_hline(yintercept=dif,size=1, col="blue") +
 		ggplot2::xlab("Trials") + 

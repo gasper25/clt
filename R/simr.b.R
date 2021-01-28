@@ -60,7 +60,7 @@ simrClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 		#graphics::abline(lsfit(plotData$a,plotData$b),col="blue",lwd=1.5)
 		#TRUE
 		plot <- ggplot2::ggplot(data=plotData, ggplot2::aes(x=a, y=b)) + 
-		ggplot2::geom_point(pch=21, size=4,fill="darkred", alpha= .4) + ggtheme + 
+		ggplot2::geom_point(pch=21, size=4,fill=theme$color[2], alpha= .4) + ggtheme + 
 		ggplot2::geom_abline(intercept=koef[1], slope=koef[2], col = "darkred", size = 1)
 		
 		

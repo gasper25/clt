@@ -63,11 +63,11 @@ cttClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 				if(d == "binomial"){dtf <- data.frame("a"=25:75, "b"=visek*15*dbinom(25:75,100,.5))}
 		
 		plot <- ggplot2::ggplot(data=rez) +
-		ggplot2::geom_histogram(col="blue4",fill=theme$color[2],alpha = .2, breaks=b$breaks, ggplot2::aes(x=x)) +
+		ggplot2::geom_histogram(col=theme$color[2],fill=theme$fill[2],alpha = .8, breaks=b$breaks, ggplot2::aes(x=x)) +
 		ggplot2::geom_line(data=dtf, size=1, ggplot2::aes(x=a,y=b, colour="distribution")) + 
 		ggplot2::xlab("Value") +
-		ggplot2::ylab("Count") +
-		ggplot2::scale_colour_manual(values=c(distribution="#56B4E9")) + ggtheme +
+		ggplot2::ylab("Count") + ggtheme +
+		ggplot2::scale_colour_manual(values=c(distribution="#E69F00")) + 
 		ggplot2::theme(legend.title=ggplot2::element_blank())
 		
 		return(plot)
@@ -101,11 +101,11 @@ cttClass <- if (requireNamespace('jmvcore')) R6::R6Class(
 		#  TRUE
 		
 		plot <- ggplot2::ggplot(data=rez) +
-		ggplot2::geom_histogram(col="blue4", fill=theme$color[2],alpha = .2, breaks=b$breaks, ggplot2::aes(x=x)) +
+		ggplot2::geom_histogram(col=theme$color[2], fill=theme$fill[2],alpha = .8, breaks=b$breaks, ggplot2::aes(x=x)) +
 		ggplot2::geom_line(data=dtf, size=1, ggplot2::aes(x=a,y=b, colour="normal")) + 
 		ggplot2::xlab("Value") +
-		ggplot2::ylab("Count") +
-		ggplot2::scale_colour_manual(values=c(normal="#7FFFD4")) +	ggtheme +
+		ggplot2::ylab("Count") + ggtheme +
+		ggplot2::scale_colour_manual(values=c(normal="#E69F00")) +	
 		ggplot2::theme(legend.title=ggplot2::element_blank())
 	
 		
