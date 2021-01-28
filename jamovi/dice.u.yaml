@@ -11,17 +11,9 @@ children:
       - type: TextBox
         name: trial
         format: number
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: dice
         format: number
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: sides
         format: number

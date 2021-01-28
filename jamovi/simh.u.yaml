@@ -11,24 +11,12 @@ children:
       - type: TextBox
         name: dif
         format: number
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: sam
         format: number
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: numer
         format: number
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: pval
         format: number

@@ -11,16 +11,8 @@ children:
       - type: TextBox
         name: trial
         format: number
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: ComboBox
         name: coins
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: prob
         format: number

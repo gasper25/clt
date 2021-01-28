@@ -10,17 +10,9 @@ children:
     children:
       - type: ComboBox
         name: dist
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: sample
         format: number
-  - type: LayoutBox
-    margin: small
-    fitToGrid: true
-    children:
       - type: TextBox
         name: repeats
         format: number
