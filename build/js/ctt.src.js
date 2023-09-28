@@ -36,29 +36,13 @@ view.layout = ui.extend({
 					type: DefaultControls.ComboBox,
 					typeName: 'ComboBox',
 					name: "dist"
-				}
-			]
-		},
-		{
-			type: DefaultControls.LayoutBox,
-			typeName: 'LayoutBox',
-			margin: "small",
-			fitToGrid: true,
-			controls: [
+				},
 				{
 					type: DefaultControls.TextBox,
 					typeName: 'TextBox',
 					name: "sample",
 					format: FormatDef.number
-				}
-			]
-		},
-		{
-			type: DefaultControls.LayoutBox,
-			typeName: 'LayoutBox',
-			margin: "small",
-			fitToGrid: true,
-			controls: [
+				},
 				{
 					type: DefaultControls.TextBox,
 					typeName: 'TextBox',

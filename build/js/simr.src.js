@@ -37,15 +37,7 @@ view.layout = ui.extend({
 					typeName: 'TextBox',
 					name: "numer",
 					format: FormatDef.number
-				}
-			]
-		},
-		{
-			type: DefaultControls.LayoutBox,
-			typeName: 'LayoutBox',
-			margin: "small",
-			fitToGrid: true,
-			controls: [
+				},
 				{
 					type: DefaultControls.TextBox,
 					typeName: 'TextBox',
